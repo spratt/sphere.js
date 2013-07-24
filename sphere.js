@@ -2,6 +2,9 @@
  * see LICENSE file
  */
 var sphere = (function(sphere, undefined) {
+	// shared variables
+	var _scene, _camera, _renderer;
+	
 	// private helper functions
 	var $ = $ || function(id_with_hash) {
 		if(id_with_hash[0] !== '#')
@@ -14,10 +17,9 @@ var sphere = (function(sphere, undefined) {
 
 	// public methods
 	sphere.init = function() {
-		// set the scene size
 		var WIDTH = 400,
 		HEIGHT = 300;
-
+		
 		// set some camera attributes
 		var VIEW_ANGLE = 45,
 		ASPECT = WIDTH / HEIGHT,
@@ -29,34 +31,34 @@ var sphere = (function(sphere, undefined) {
 
 		// create a WebGL renderer, camera
 		// and a scene
-		var renderer = new THREE.WebGLRenderer();
-		var camera =
+		_renderer = new THREE.WebGLRenderer();
+		_camera =
 			new THREE.PerspectiveCamera(
 				VIEW_ANGLE,
 				ASPECT,
 				NEAR,
 				FAR);
 
-		var scene = new THREE.Scene();
+		_scene = new THREE.Scene();
 
 		// add the camera to the scene
-		scene.add(camera);
+		_scene.add(_camera);
 
 		// the camera starts at 0,0,0
 		// so pull it back
-		camera.position.z = 300;
+		_camera.position.z = 300;
 
 		// start the renderer
-		renderer.setSize(WIDTH, HEIGHT);
+		_renderer.setSize(WIDTH, HEIGHT);
 
 		// attach the render-supplied DOM element
-		container.appendChild(renderer.domElement);
+		container.appendChild(_renderer.domElement);
 
 		// announce state
 		log('initialized');
+	};
 
-		/* DRAW A SPHERE FOR TEST PURPOSES */
-
+	sphere.addSphere = function() {
 		// set up the sphere vars
 		var radius = 50,
 		segments = 16,
@@ -80,13 +82,13 @@ var sphere = (function(sphere, undefined) {
 			sphereMaterial);
 
 		// add the sphere to the scene
-		scene.add(sphere);
+		_scene.add(sphere);
 
 		// announce state
 		log('sphere added to scene');
+	};
 
-		/* add lighting */
-
+	sphere.addLighting = function() {
 		// create a point light
 		var pointLight =
 			new THREE.PointLight(0xFFFFFF);
@@ -97,17 +99,21 @@ var sphere = (function(sphere, undefined) {
 		pointLight.position.z = 130;
 
 		// add to the scene
-		scene.add(pointLight);
+		_scene.add(pointLight);
 
 		// announce state
 		log('lighting added to scene');
+	};
 
-		/* draw */
-		renderer.render(scene, camera); 
+	sphere.draw = function() {
+		_renderer.render(_scene, _camera);
 	};
 
 	sphere.main = function() {
 		sphere.init();
+		sphere.addSphere();
+		sphere.addLighting();
+		sphere.draw();
 	};
 	window.addEventListener('DOMContentLoaded',sphere.main);
 
