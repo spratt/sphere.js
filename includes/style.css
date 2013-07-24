@@ -1,4 +1,4 @@
-body {
+#content {
     margin: 0 auto;   /* centre horizontally  */
     max-width: 40em;  /* readable line width  */
     line-height: 1.5; /* compact line spacing */

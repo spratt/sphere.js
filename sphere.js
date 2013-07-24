@@ -2,6 +2,15 @@
  * see LICENSE file
  */
 var sphere = (function(sphere, undefined) {
+	// configuration
+	var WIDTH = 900;
+	var HEIGHT = 900;
+	
+	var VIEW_ANGLE = 45;
+	var ASPECT = WIDTH / HEIGHT;
+	var NEAR = 0.1;
+	var FAR = 10000;
+	
 	// shared variables
 	var _scene, _camera, _renderer;
 	
@@ -17,14 +26,6 @@ var sphere = (function(sphere, undefined) {
 
 	// public methods
 	sphere.init = function() {
-		var WIDTH = 400,
-		HEIGHT = 300;
-		
-		// set some camera attributes
-		var VIEW_ANGLE = 45,
-		ASPECT = WIDTH / HEIGHT,
-		NEAR = 0.1,
-		FAR = 10000;
 
 		// get the DOM element to attach to
 		var container = $('#container');
@@ -46,7 +47,7 @@ var sphere = (function(sphere, undefined) {
 
 		// the camera starts at 0,0,0
 		// so pull it back
-		_camera.position.z = 300;
+		_camera.position.z = 3;
 
 		// start the renderer
 		_renderer.setSize(WIDTH, HEIGHT);
@@ -60,7 +61,7 @@ var sphere = (function(sphere, undefined) {
 
 	sphere.addSphere = function() {
 		// set up the sphere vars
-		var radius = 50,
+		var radius = 1,
 		segments = 16,
 		rings = 16;
 
@@ -90,8 +91,7 @@ var sphere = (function(sphere, undefined) {
 
 	sphere.addLighting = function() {
 		// create a point light
-		var pointLight =
-			new THREE.PointLight(0xFFFFFF);
+		var pointLight = new THREE.PointLight(0xFFFFFF);
 
 		// set its position
 		pointLight.position.x = 10;
