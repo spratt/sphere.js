@@ -80,7 +80,8 @@ var sphere = (function(sphere, undefined) {
 
 		// create the sphere's material
 		var sphereMaterial = new THREE.MeshLambertMaterial({
-			color: 0xCC0000
+			color: 0xCCCCCC,
+			opacity: 0.5
 		});
 
 		// create a new mesh with sphere geometry
@@ -98,9 +99,13 @@ var sphere = (function(sphere, undefined) {
 
 		// announce state
 		log('sphere added to scene');
+
+		// add soft white ambient light
+		var light = new THREE.AmbientLight( 0x202020 );
+		_scene.add( light );
 		
 		// create a point light
-		var pointLight = new THREE.PointLight(0xFFFFFF);
+		var pointLight = new THREE.PointLight(0x404040);
 
 		// set its position
 		pointLight.position.x = 10;
